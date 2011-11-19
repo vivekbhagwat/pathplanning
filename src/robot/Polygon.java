@@ -13,7 +13,7 @@ public class Polygon
 	
 	public Point add(Point p)
 	{
-		if vertices.size() < numVertices
+		if (vertices.size() < numVertices)
 		{
 			vertices.add(p);
 			return p;
@@ -21,5 +21,25 @@ public class Polygon
 		return null;			
 	}
 	
+	public Polygon grow()
+	{
+		if (vertices.size() == numVertices)
+		{
+			
+		}
+	}
 	
+	public Point[] setOfPoints()
+	{
+		if (vertices.size() == numVertices)
+		{
+			Point[] pts = new Point[numVertices];
+			for(int i = 0; i < vertices.size(); i++)
+			{
+				pts[i] = vertices.get(i);
+			}
+			return pts;
+		}
+		return null;
+	}
 }
