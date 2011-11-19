@@ -11,8 +11,14 @@ public class Point
 		this.y = x;
 	}
 	
-	public distFrom(Point p)
+	public double distFrom(Point p)
 	{
 		return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
+	}
+	
+	//argument acts as a translation vector
+	public Point translate(Point vector)
+	{
+		return new Point(this.x + vector.x, this.y + vector.y);
 	}
 }
