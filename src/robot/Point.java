@@ -21,4 +21,9 @@ public class Point
 	{
 		return new Point(this.x + vector.x, this.y + vector.y);
 	}
+	
+	public Point translate(int x, int y)
+	{
+		return new Point(this.x + x, this.y + y);
+	}
 }
