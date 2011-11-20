@@ -1,13 +1,14 @@
 package robot;
+import java.util.ArrayList
 
 public class Polygon
 {
-	private java.util.ArrayList<Point> vertices;
+	private ArrayList<Point> vertices;
 	private int numVertices;
 	
 	public Polygon(int numVertices)
 	{
-		vertices = new java.util.ArrayList<Point>(numVertices);
+		vertices = new ArrayList<Point>(numVertices);
 		this.numVertices = numVertices;
 	}
 	
@@ -35,7 +36,7 @@ public class Polygon
 	{
 		assert vertices.size() == numVertices;
 		Polygon p = new Polygon(numVertices);
-		p.vertices = (java.util.ArrayList<Point>)vertices.clone();
+		p.vertices = (ArrayList<Point>)vertices.clone();
 		return p;
 	}
 	
