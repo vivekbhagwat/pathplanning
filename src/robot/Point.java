@@ -11,6 +11,13 @@ public class Point
 		this.y = x;
 	}
 	
+	public Point(String line)
+	{
+		String[] nums = line.split("\\s");
+		this.x = Double.parseDouble(nums[0]);
+		this.y = Double.parseDouble(nums[1]);
+	}
+	
 	public double distFrom(Point p)
 	{
 		return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
