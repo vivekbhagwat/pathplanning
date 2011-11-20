@@ -11,7 +11,7 @@ public class Point implements Comparable<Point>
 	public Point(double x, double y)
 	{
 		this.x = x;
-		this.y = x;
+		this.y = y;
 	}
 	
 	public Point(String line)
@@ -70,5 +70,10 @@ public class Point implements Comparable<Point>
 		if(this.dist == other.dist)
 			return 0;
 		return this.dist - other.dist > 0 ? 1 : -1;
+	}
+	
+	public String toString()
+	{
+		return "<Point " + x + "," + y + ">";
 	}
 }

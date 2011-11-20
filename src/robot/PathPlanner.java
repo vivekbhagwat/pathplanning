@@ -60,6 +60,16 @@ public class PathPlanner {
 	}
 	
 	public static void main(String [] args) {
+		// fast test
+		Polygon pp = new Polygon(4);
+		pp.add(new Point(-1,-1));
+		pp.add(new Point(-1,1));
+		pp.add(new Point(1,1));
+		pp.add(new Point(1,-1));
+		
+		pp = pp.grow(1.0);
+		
+		System.out.println(pp);
 		// open the map 
 		// Map map = new Map(args[0]);
 		

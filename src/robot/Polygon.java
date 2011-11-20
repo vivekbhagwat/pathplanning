@@ -16,6 +16,7 @@ public class Polygon
 	{
 		if (vertices.size() < numVertices)
 		{
+			System.out.println(p);
 			vertices.add(p);
 			return p;
 		}
@@ -37,11 +38,11 @@ public class Polygon
 		center.mult(1/(double)numVertices);
 		
 		/* move the line segments out */
-		for(i = 0; i < numVertices-1; i++) {
+		for(i = 0; i < numVertices; i++) {
 			// grab two edges
-			left = this.vertices.get((i-1) % numVertices);
-			p = this.vertices.get((i) % numVertices);
-			right = this.vertices.get((i+1) % numVertices);
+			left = this.vertices.get((i-1 + numVertices) % numVertices).clone();
+			p = this.vertices.get(i % numVertices).clone();
+			right = this.vertices.get((i+1) % numVertices).clone();
 			
 			/* turn the normals right side out (center is always inside the polygon */
 			normleft  = left.sub(p).unit().perpendicular();
@@ -50,6 +51,8 @@ public class Polygon
 				normleft.mult(-1.0);
 			if(normright.dot(center) < 0)
 				normright.mult(-1.0);
+			normleft.mult(amount);
+			normright.mult(amount);
 			
 			/* move the points out */
 			eleft1 = left.translate(normleft);
@@ -92,5 +95,15 @@ public class Polygon
 			pts[i] = vertices.get(i);
 		}
 		return pts;
+	}
+	
+	public String toString()
+	{
+		String s = "[Polygon ";
+		for(Point p : vertices) {
+			s = s + "<" + p.x + ", " + p.y + ">, ";
+		}
+		s = s + "]";
+		return s;
 	}
 }
