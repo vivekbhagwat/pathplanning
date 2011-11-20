@@ -1,9 +1,12 @@
 package robot;
 
-public class Point
+public class Point implements Comparable
 {
 	public double x;
 	public double y;
+	public double dist = Double.MAX_VALUE;
+	public boolean known = false;
+	public Point path = null;//previous node in path
 	
 	public Point(double x, double y)
 	{
@@ -50,5 +53,12 @@ public class Point
 	public Point clone()
 	{
 		return new Point(this.x, this.y);
+	}
+	
+	public int compareTo(Point other)
+	{
+		if(this.dist == other.dist)
+			return 0;
+		return this.dist - other.dist > 0 ? 1 : -1;
 	}
 }
