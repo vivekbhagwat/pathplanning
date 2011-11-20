@@ -2,10 +2,10 @@ package robot;
 
 public class Point
 {
-	public int x;
-	public int y;
+	public double x;
+	public double y;
 	
-	public Point(int x, int y)
+	public Point(double x, double y)
 	{
 		this.x = x;
 		this.y = x;
@@ -16,6 +16,19 @@ public class Point
 		String[] nums = line.split("\\s");
 		this.x = Double.parseDouble(nums[0]);
 		this.y = Double.parseDouble(nums[1]);
+	}
+	
+	public Point sub(Point p)
+	{
+		return new Point(this.x - p.x, this.y - p.y);
+	}
+	public Point mult(Double m)
+	{
+		return new Point(this.x*m, this.y*m);
+	}
+	public Point unit()
+	{
+		return this.clone().mult(1/this.distFrom(new Point(0,0)));
 	}
 	
 	public double distFrom(Point p)
@@ -32,5 +45,10 @@ public class Point
 	public Point translate(int x, int y)
 	{
 		return new Point(this.x + x, this.y + y);
+	}
+	
+	public Point clone()
+	{
+		return new Point(this.x, this.y);
 	}
 }

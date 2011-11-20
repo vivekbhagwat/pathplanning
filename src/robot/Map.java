@@ -37,7 +37,7 @@ public class Map
 	//fills in map with points from inputFile
 	private void processFile(String inputFile)
 	{
-		BufferedReader br = new BufferedReader();
+		BufferedReader br;
 		
 		try {
 			br = new BufferedReader(new FileReader(inputFile));
@@ -61,7 +61,7 @@ public class Map
 					// polygons[i].add(new Point(Double.parseDouble(nums[0]), 
 												// Double.parseDouble(nums[1])));
 				}
-				polygons[i].grow();
+				polygons[i].grow(ROBOT_SIZE/2);
 				addToMap(polygons[i]);
 			}			
 		}catch(IOException e)
@@ -84,9 +84,9 @@ public class Map
 	
 	private void addToMap(Polygon p)
 	{
-		vertices = p.setOfPoints();
+		Point[] vertices = p.setOfPoints();
 		
-		for(int j = 0; j < vertices.length; i++)
+		for(int j = 0; j < vertices.length; j++)
 		{
 			map.add(vertices[j]);
 		}

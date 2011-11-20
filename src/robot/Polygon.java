@@ -1,5 +1,5 @@
 package robot;
-import java.util.ArrayList
+import java.util.ArrayList;
 
 public class Polygon
 {
@@ -22,16 +22,24 @@ public class Polygon
 		return null;			
 	}
 	
-	public Polygon grow()
+	public Polygon grow(double amount)
 	{
 		assert vertices.size() == numVertices;
 		Polygon poly = clone();
+		Point p, left, right;
 		for(int i = 0; i < numVertices-1; i++) {
-			poly.vertices.get(i % numVertices);
+			p = this.vertices.get(i % numVertices);
+			left = this.vertices.get((i-1) % numVertices);
+			right = this.vertices.get((i+1) % numVertices);
+			left = p.sub(left).unit().mult(amount);
+			right = p.sub(right).unit().mult(amount);
+			p = left.translate(right).translate(p);
+			poly.vertices.set(i, p);
 		}
 		return poly;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Polygon clone()
 	{
 		assert vertices.size() == numVertices;
@@ -42,7 +50,7 @@ public class Polygon
 	
 	public Point[] setOfPoints()
 	{
-		assert (vertices.size() == numVertices)
+		assert (vertices.size() == numVertices);
 		
 		Point[] pts = new Point[numVertices];
 		for(int i = 0; i < vertices.size(); i++)
