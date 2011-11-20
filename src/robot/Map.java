@@ -2,19 +2,22 @@ package robot;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Map
 {
 	public final double ROBOT_SIZE = 1.0; //random value?
 	private ArrayList<Point> map;
 	
-	public Map(String inputFile)
+	public Map(String inputFile, Point start, Point goal)
 	{
 		//read file here
 		map = new ArrayList<Point>();
 		
 		processFile(inputFile);
-				
+		
+		map.add(start);
+		map.add(goal);
 	}
 	
 	
@@ -39,7 +42,9 @@ public class Map
 				int numVertices = Integer.parseInt(br.readLine());
 				for(int j = 0; j < numVertices; j++)
 				{
-					polygons[i].add(Double.parseDouble(br.readLine()));
+					String[] nums = br.readLine().split("\\s");					
+					polygons[i].add(new Point(Double.parseDouble(nums[0]), 
+												Double.parseDouble(nums[1])));
 				}
 				polygons[i].grow();
 				addToMap(polygons[i]);
