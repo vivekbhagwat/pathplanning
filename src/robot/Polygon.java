@@ -23,10 +23,20 @@ public class Polygon
 	
 	public Polygon grow()
 	{
-		if (vertices.size() == numVertices)
-		{
-			
+		assert vertices.size() == numVertices;
+		Polygon poly = clone();
+		for(int i = 0; i < numVertices-1; i++) {
+			poly.vertices.get(i % numVertices);
 		}
+		return poly;
+	}
+	
+	public Polygon clone()
+	{
+		assert vertices.size() == numVertices;
+		Polygon p = new Polygon(numVertices);
+		p.vertices = (java.util.ArrayList<Point>)vertices.clone();
+		return p;
 	}
 	
 	public Point[] setOfPoints()
