@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Polygon
 {
-	private ArrayList<Point> vertices;
-	private int numVertices;
+	public ArrayList<Point> vertices;
+	public int numVertices;
 	
 	public Polygon(int numVertices)
 	{

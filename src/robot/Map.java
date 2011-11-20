@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 public class Map
 {
 	public final double ROBOT_SIZE = 1.0; //random value?
-	private ArrayList<Point> map;
-	private double[][] adjacencyMatrix;
+	public ArrayList<Point> map;
+	public double[][] adjacencyMatrix;
 	
 	public Map(String inputFile, Point start, Point goal)
 	{

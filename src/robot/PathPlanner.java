@@ -1,6 +1,9 @@
 package robot;
 
 public class PathPlanner {
+	
+	
+	
 	public static void main(String [] args) {
 		// open the map 
 		// Map map = new Map(args[0]);
