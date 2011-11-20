@@ -1,6 +1,6 @@
 package robot;
 
-public class Point implements Comparable
+public class Point implements Comparable<Point>
 {
 	public double x;
 	public double y;
@@ -34,6 +34,15 @@ public class Point implements Comparable
 		return this.clone().mult(1/this.distFrom(new Point(0,0)));
 	}
 	
+	public Point perpendicular()
+	{
+		return new Point(this.y, -this.x);
+	}
+	public double dot(Point other)
+	{
+		return this.x*other.x + this.y*other.y;
+	}
+	
 	public double distFrom(Point p)
 	{
 		return Math.sqrt(Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2));
@@ -55,6 +64,7 @@ public class Point implements Comparable
 		return new Point(this.x, this.y);
 	}
 	
+	@Override
 	public int compareTo(Point other)
 	{
 		if(this.dist == other.dist)

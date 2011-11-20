@@ -42,11 +42,11 @@ public class PathPlanner {
 				}
 			}
 		}
-		Point end = map.goal
+		Point end = map.goal;
 		double pathLength = end.dist;
 		while(end.path != null)
 		{
-			path.add(end)
+			path.add(end);
 			end = end.path;
 		}
 		path.add(map.start);
@@ -56,6 +56,7 @@ public class PathPlanner {
 	private ArrayList<Point> possibleNextPoints(Point current, Map map)
 	{
 		//to be implemented
+		return new ArrayList<Point>();
 	}
 	
 	public static void main(String [] args) {

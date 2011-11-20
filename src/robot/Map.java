@@ -2,7 +2,6 @@ package robot;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Map
 {
