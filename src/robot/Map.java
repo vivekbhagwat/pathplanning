@@ -9,11 +9,14 @@ public class Map
 	public final double ROBOT_SIZE = 1.0; //random value?
 	public ArrayList<Point> map;
 	public double[][] adjacencyMatrix;
+	public Point start, goal;
 	
 	public Map(String inputFile, Point start, Point goal)
 	{
 		//read file here
 		map = new ArrayList<Point>();
+		this.start = start;
+		this.goal = goal;
 		map.add(start);
 		map.add(goal);
 			
