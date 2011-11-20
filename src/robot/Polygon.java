@@ -42,15 +42,13 @@ public class Polygon
 	
 	public Point[] setOfPoints()
 	{
-		if (vertices.size() == numVertices)
+		assert (vertices.size() == numVertices)
+		
+		Point[] pts = new Point[numVertices];
+		for(int i = 0; i < vertices.size(); i++)
 		{
-			Point[] pts = new Point[numVertices];
-			for(int i = 0; i < vertices.size(); i++)
-			{
-				pts[i] = vertices.get(i);
-			}
-			return pts;
+			pts[i] = vertices.get(i);
 		}
-		return null;
+		return pts;
 	}
 }
