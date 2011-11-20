@@ -8,19 +8,33 @@ public class Map
 {
 	public final double ROBOT_SIZE = 1.0; //random value?
 	private ArrayList<Point> map;
+	private double[][] adjacencyMatrix;
 	
 	public Map(String inputFile, Point start, Point goal)
 	{
 		//read file here
 		map = new ArrayList<Point>();
-		
-		processFile(inputFile);
-		
 		map.add(start);
 		map.add(goal);
+			
+		processFile(inputFile);
+	
+		adjacencyMatrix = new double[map.size()][map.size()];
+		fillAdjacencyMatrix();
 	}
 	
+	private void fillAdjacencyMatrix()
+	{
+		for(int i = 0; i < adjacencyMatrix.length; i++)
+		{
+			for(int j = 0; j < adjacencyMatrix[i].length; j++)
+			{
+				adjacencyMatrix[i][j] = map.get(i).distFrom(map.get(j));
+			}
+		}
+	}
 	
+	//fills in map with points from inputFile
 	private void processFile(String inputFile)
 	{
 		BufferedReader br = new BufferedReader();
@@ -42,9 +56,10 @@ public class Map
 				int numVertices = Integer.parseInt(br.readLine());
 				for(int j = 0; j < numVertices; j++)
 				{
-					String[] nums = br.readLine().split("\\s");					
-					polygons[i].add(new Point(Double.parseDouble(nums[0]), 
-												Double.parseDouble(nums[1])));
+					polygons[i].add(new Point(br.readLine()));
+					// String[] nums = br.readLine().split("\\s");
+					// polygons[i].add(new Point(Double.parseDouble(nums[0]), 
+												// Double.parseDouble(nums[1])));
 				}
 				polygons[i].grow();
 				addToMap(polygons[i]);
