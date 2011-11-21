@@ -68,7 +68,7 @@ public class PathPlanner {
 		pp.add(new Point(1,-1));
 		
 		// open the map 
-		Map map = new Map(args[0]);
+		Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
 		planner.dijkstra(map);
 		// grow obstacles
