@@ -1,4 +1,4 @@
-package robot;
+// package robot;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -70,7 +70,14 @@ public class PathPlanner {
 		Map map = new Map(args[0], args[1]);
 		// Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
-		planner.dijkstra(map);
-
+		System.out.println(planner.dijkstra(map));
+		// grow obstacles
+		// for(Polygon p : map.polygons) {
+		//    ? = p.grow();
+		// }	
+		
+		// create visibility graph
+		
+		// use dijkstra's to get shortest path
 	} 
 }
