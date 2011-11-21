@@ -26,7 +26,7 @@ public class PathPlanner {
 		while((current = pq.poll()) != null)
 		{
 			current.known = true;
-			ArrayList<Point> next = possibleNextPoints(current, map);
+			ArrayList<Point> next = PathPlanner.possibleNextPoints(current, map);
 			Point adj = null;
 			
 			// finds index of the point
