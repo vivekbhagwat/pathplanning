@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 public class MapComponent extends JComponent
 {
+	private static final long serialVersionUID = 1L;
 	public int mapHeight, mapWidth;
 	private Map robotMap;
 	
