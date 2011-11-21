@@ -59,7 +59,8 @@ public class PathPlanner {
 			end = end.path;
 		}
 		path.add(map.start);
-		return java.util.Collections.reverse(path);
+		java.util.Collections.reverse(path);
+		return path;
 	}
 	
 	private ArrayList<Point> possibleNextPoints(Point current, Map map)
