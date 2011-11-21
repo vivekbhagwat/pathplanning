@@ -21,12 +21,19 @@ public class MapComponent extends JComponent
 		mapHeight = getHeight();
 		mapWidth = getWidth();
 		
-		g2.drawString("Shop",100,100);
-		g2.drawRect(0,0,100,100);
-		ArrayList<Point> points = robotMap.nodes;
-		for(int i = 0; i < points.size(); i++)
+		ArrayList<Polygon> obstacles = robotMap.obstacles;
+		for(int i = 0; i < obstacles.size(); i++)
 		{
-			drawPoint(g2, points.get(i));
+			ArrayList<Point> points = obstacles.get(i).vertices;
+			for(int j = 0; j < points.size(); j++)
+			{
+				drawPoint(g2, points.get(i));
+				
+				if (j < points.size()-1)
+				{
+					drawEdge(g2, points.get(i), points.get(i+1));
+				}
+			}
 			// Point pt = points.get(i);
 			// g2.fillOval(transform(pt.x), transform(pt.y), 5, 5);
 			// g2.drawString("(" + ((Double)(pt.x)).toString() + ", " + ((Double)(pt.y)).toString() + ")",
@@ -38,6 +45,7 @@ public class MapComponent extends JComponent
 			Point pt = bound.get(i);
 			
 		}
+		
 	}
 	
 	private void drawPoint(Graphics2D g2, Point pt)
@@ -45,6 +53,12 @@ public class MapComponent extends JComponent
 		g2.fillOval(transform(pt.x), transform(pt.y), 5, 5);
 		g2.drawString("(" + ((Double)(pt.x)).toString() + ", " + ((Double)(pt.y)).toString() + ")",
 			transform(pt.x), transform(pt.y));
+	}
+	
+	private void drawEdge(Graphics2D g2, Point pt1, Point pt2)
+	{
+		g2.drawLine(transform(pt1.x), transform(pt1.y),
+			transform(pt2.x), transform(pt2.y));
 	}
 	
 	private int transform(double val)
