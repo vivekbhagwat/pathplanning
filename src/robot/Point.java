@@ -1,4 +1,4 @@
-package robot;
+// package robot;
 
 public class Point implements Comparable<Point>
 {
