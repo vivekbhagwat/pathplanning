@@ -32,6 +32,7 @@ public class Map
 	{
 		ArrayList<Point> points = processGoalFile(goalFile);
 		assert points != null;
+		System.out.println(points);
 		Point start = points.get(0);
 		Point goal  = points.get(1);
 		
@@ -130,7 +131,8 @@ public class Map
 		}
 		
 		try {
-			points.add(new Point(br.readLine()));
+			points.add(new Point(br.readLine())); //start
+			points.add(new Point(br.readLine())); //goal
 		} catch(IOException e) {
 			System.out.println(e);
 			e.printStackTrace();
