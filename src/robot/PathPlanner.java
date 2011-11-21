@@ -66,20 +66,10 @@ public class PathPlanner {
 	}
 	
 	public static void main(String [] args) {
-		// fast test
-		
-		
 		// open the map 
-		Map map = new Map(args[0]);
+		Map map = new Map(args[0], args[1]);
 		PathPlanner planner = new PathPlanner();
 		planner.dijkstra(map);
-		// grow obstacles
-		// for(Polygon p : map.polygons) {
-		//    ? = p.grow();
-		// }	
-		
-		// create visibility graph
-		
-		// use dijkstra's to get shortest path
+
 	} 
 }

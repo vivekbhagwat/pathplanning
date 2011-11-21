@@ -22,6 +22,29 @@ public class Map
 		nodes.add(goal);
 			
 		processFile(inputFile);
+		assert nodes != null;
+	
+		adjacencyMatrix = new double[nodes.size()][nodes.size()];
+		fillAdjacencyMatrix();
+	}
+	
+	public Map(String inputFile, String goalFile)
+	{
+		ArrayList<Point> points = processGoalFile(goalFile);
+		assert points != null;
+		Point start = points.get(0);
+		Point goal  = points.get(1);
+		
+		/* copy paste */
+		boundary = new ArrayList<Point>();
+		nodes = new ArrayList<Point>();
+		obstacles = new ArrayList<Polygon>();
+		this.start = start;
+		this.goal = goal;
+		nodes.add(start);
+		nodes.add(goal);
+			
+		processFile(inputFile);
 	
 		adjacencyMatrix = new double[nodes.size()][nodes.size()];
 		fillAdjacencyMatrix();
@@ -89,6 +112,39 @@ public class Map
 				return;
 			}
 		}
+	}
+	
+	private ArrayList<Point> processGoalFile(String goalFile)
+	{
+		BufferedReader br;
+		ArrayList<Point> points = new ArrayList<Point>();
+		
+		try {
+			br = new BufferedReader(new FileReader(goalFile));
+		} catch(FileNotFoundException e) {
+			System.out.println(e);
+			e.printStackTrace();
+			return null;
+		}
+		
+		try {
+			points.add(new Point(br.readLine()));
+		} catch(IOException e) {
+			System.out.println(e);
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if(br != null)
+					br.close();
+			}catch(IOException e)
+			{
+				System.out.println(e);
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return points;
 	}
 	
 	private void addToMap(Polygon p)
