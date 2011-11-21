@@ -55,17 +55,19 @@ public class PathPlanner {
 	
 	private ArrayList<Point> possibleNextPoints(Point current, Map map)
 	{
-		//to be implemented
-		return new ArrayList<Point>();
+		// gets all the points, except the immediate predecessor
+		ArrayList<Point> next = new ArrayList<Point>();
+		for(int i = 0; i < map.nodes.size(); i++)
+		{
+			if(map.nodes.get(i) != current.path)
+				next.add(map.nodes.get(i));
+		}
+		return next;
 	}
 	
 	public static void main(String [] args) {
 		// fast test
-		Polygon pp = new Polygon(4);
-		pp.add(new Point(-1,-1));
-		pp.add(new Point(-1,1));
-		pp.add(new Point(1,1));
-		pp.add(new Point(1,-1));
+		
 		
 		// open the map 
 		// Map map = new Map(args[0]);

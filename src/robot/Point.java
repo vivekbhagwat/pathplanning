@@ -4,6 +4,7 @@ public class Point implements Comparable<Point>
 {
 	public double x;
 	public double y;
+	// below is mostly for the path finding algorithms
 	public double dist = Double.MAX_VALUE;
 	public boolean known = false;
 	public Point path = null;//previous node in path
