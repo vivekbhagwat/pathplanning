@@ -1,4 +1,3 @@
-// package robot;
 import java.util.ArrayList;
 
 public class Polygon
@@ -63,8 +62,11 @@ public class Polygon
 			p3 = this.vertices.get(i % numVertices).clone();
 			p4 = this.vertices.get((i+1) % numVertices).clone();
 			inter = intersectLineSegments(p1,p2, p3,p4);
-			if(inter != null)
-				return true;
+			if(inter != null) {
+				if(!inter.equal(p1) && !inter.equal(p2)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

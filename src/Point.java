@@ -1,5 +1,3 @@
-// package robot;
-
 public class Point implements Comparable<Point>
 {
 	public double x;
@@ -11,6 +9,11 @@ public class Point implements Comparable<Point>
 	
 	public Point(double x, double y)
 	{
+		// handling -0.0, which we never want
+		if(x == 0.0f)
+			x = 0.0;
+		if(y == 0.0)
+			y = 0.0;
 		this.x = x;
 		this.y = y;
 	}
@@ -63,6 +66,11 @@ public class Point implements Comparable<Point>
 	public Point clone()
 	{
 		return new Point(this.x, this.y);
+	}
+	
+	public boolean equal(Point other)
+	{
+		return this.x == other.x && this.y == other.y;
 	}
 	
 	@Override

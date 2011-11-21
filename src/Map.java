@@ -1,5 +1,3 @@
-// package robot;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -46,9 +44,17 @@ public class Map
 		nodes.add(goal);
 			
 		processFile(inputFile);
-	
+		assert nodes != null;
+		
 		adjacencyMatrix = new double[nodes.size()][nodes.size()];
 		fillAdjacencyMatrix();
+		
+		/* for(int i = 0; i < adjacencyMatrix.length; i++) {
+			for(int j = 0; j < adjacencyMatrix.length; j++) {
+				System.out.print(adjacencyMatrix[i][j]+",\t");
+			}
+			System.out.println();
+		} */
 	}
 	
 	private void fillAdjacencyMatrix()
@@ -61,9 +67,9 @@ public class Map
 				Point end   = nodes.get(j);
 				for(int k = 0; k < obstacles.size(); k++)
 					if(obstacles.get(k).intersect(begin, end))
-						adjacencyMatrix[i][j] = nodes.get(i).distFrom(nodes.get(j));
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;						
 					else
-						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						adjacencyMatrix[i][j] = nodes.get(i).distFrom(nodes.get(j));
 			}
 		}
 	}

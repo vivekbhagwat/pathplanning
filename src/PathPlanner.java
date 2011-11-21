@@ -1,5 +1,3 @@
-// package robot;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -27,18 +25,26 @@ public class PathPlanner {
 			ArrayList<Point> next = possibleNextPoints(current, map);
 			Point adj = null;
 			
-			
+			// finds index of the point
+			// so dumb, but no one cares
+			int j = 0;
+			while(!points.get(j).equals(current))
+				j++;
 			for(int i = 0; i < next.size(); i++)
 			{
 				adj = next.get(i);
+				
+				// finds index of the point
+				int ind = 0;
+				while(!points.get(ind).equals(adj))
+					ind++;
+				
 				if(!adj.known)
 				{
-					//wrong
-					int j = points.indexOf(current);
-					if(current.dist + map.adjacencyMatrix[j][i] < adj.dist)
+					if(current.dist + map.adjacencyMatrix[j][ind] < adj.dist)
 					{
 						//wrong
-						adj.dist = current.dist + map.adjacencyMatrix[j][i];
+						adj.dist = current.dist + map.adjacencyMatrix[j][ind];
 						adj.path = current;
 					}
 					pq.add(adj);
@@ -74,13 +80,5 @@ public class PathPlanner {
 		// Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
 		System.out.println(planner.dijkstra(map));
-		// grow obstacles
-		// for(Polygon p : map.polygons) {
-		//    ? = p.grow();
-		// }	
-		
-		// create visibility graph
-		
-		// use dijkstra's to get shortest path
 	} 
 }
