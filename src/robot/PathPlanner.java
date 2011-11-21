@@ -9,7 +9,7 @@ public class PathPlanner {
 	public LinkedList<Point> dijkstra(Map map)
 	{
 		LinkedList<Point> path = new LinkedList<Point>();
-		ArrayList<Point> points = map.map;
+		ArrayList<Point> points = map.nodes;
 		map.start.dist = 0.0;
 		path.add(map.start);		
 		
@@ -31,12 +31,11 @@ public class PathPlanner {
 				if(!adj.known)
 				{
 					//wrong
-					int j = points.getIndex(current);
+					int j = points.indexOf(current);
 					if(current.dist + map.adjacencyMatrix[j][i] < adj.dist)
 					{
 						//wrong
 						adj.dist = current.dist + map.adjacencyMatrix[j][i];
-						
 						adj.path = current;
 					}
 					pq.add(adj);
@@ -44,7 +43,7 @@ public class PathPlanner {
 			}
 		}
 		Point end = map.goal;
-		double pathLength = end.dist;
+		// double pathLength = end.dist;
 		while(end.path != null)
 		{
 			path.add(end);
