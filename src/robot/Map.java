@@ -6,22 +6,24 @@ import java.util.ArrayList;
 public class Map
 {
 	public final double ROBOT_SIZE = 1.0; //random value?
-	public ArrayList<Point> map;
+	public ArrayList<Point> boundary, nodes;
+	public ArrayList<Polygon> obstacles;
 	public double[][] adjacencyMatrix;
 	public Point start, goal;
 	
 	public Map(String inputFile, Point start, Point goal)
 	{
-		//read file here
-		map = new ArrayList<Point>();
+		boundary = new ArrayList<Point>();
+		nodes = new ArrayList<Point>();
+		obstacles = new ArrayList<Polygon>();
 		this.start = start;
 		this.goal = goal;
-		map.add(start);
-		map.add(goal);
+		nodes.add(start);
+		nodes.add(goal);
 			
 		processFile(inputFile);
 	
-		adjacencyMatrix = new double[map.size()][map.size()];
+		adjacencyMatrix = new double[nodes.size()][nodes.size()];
 		fillAdjacencyMatrix();
 	}
 	
@@ -31,7 +33,13 @@ public class Map
 		{
 			for(int j = 0; j < adjacencyMatrix[i].length; j++)
 			{
-				adjacencyMatrix[i][j] = map.get(i).distFrom(map.get(j));
+				Point begin = nodes.get(i);
+				Point end   = nodes.get(j);
+				for(int k = 0; k < obstacles.size(); k++)
+					if(obstacles.get(k).intersect(begin, end))
+						adjacencyMatrix[i][j] = nodes.get(i).distFrom(nodes.get(j));
+					else
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
 			}
 		}
 	}
@@ -43,12 +51,12 @@ public class Map
 		
 		try {
 			br = new BufferedReader(new FileReader(inputFile));
-		}catch(FileNotFoundException e)
-		{
+		} catch(FileNotFoundException e) {
 			System.out.println(e);
 			e.printStackTrace();
 			return;
 		}
+		
 		try {
 			int numPolygons = Integer.parseInt(br.readLine());
 			Polygon[] polygons = new Polygon[numPolygons];
@@ -59,19 +67,18 @@ public class Map
 				for(int j = 0; j < numVertices; j++)
 				{
 					polygons[i].add(new Point(br.readLine()));
-					// String[] nums = br.readLine().split("\\s");
-					// polygons[i].add(new Point(Double.parseDouble(nums[0]), 
-												// Double.parseDouble(nums[1])));
 				}
-				polygons[i].grow(ROBOT_SIZE/2);
+				// don't grow the first one
+				if(i > 0)
+					polygons[i].grow(ROBOT_SIZE/2);
+				obstacles.add(polygons[i]);
 				addToMap(polygons[i]);
-			}			
-		}catch(IOException e)
-		{
+			}
+		} catch(IOException e) {
 			System.out.println(e);
 			e.printStackTrace();
 			return;
-		}finally {
+		} finally {
 			try {
 				if(br != null)
 					br.close();
@@ -90,7 +97,7 @@ public class Map
 		
 		for(int j = 0; j < vertices.length; j++)
 		{
-			map.add(vertices[j]);
+			nodes.add(vertices[j]);
 		}
 	}
 	
