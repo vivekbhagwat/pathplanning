@@ -64,9 +64,11 @@ public class Map
 			for(int i = 0; i < polygons.length; i++)
 			{
 				int numVertices = Integer.parseInt(br.readLine());
+				polygons[i] = new Polygon(numVertices);				
 				for(int j = 0; j < numVertices; j++)
 				{
-					polygons[i].add(new Point(br.readLine()));
+					String line = br.readLine();
+					polygons[i].add(new Point(line));
 				}
 				// don't grow the first one
 				if(i > 0)

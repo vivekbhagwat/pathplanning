@@ -70,7 +70,7 @@ public class PathPlanner {
 		// open the map 
 		Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
-		planner.dijkstra(map);
+		System.out.println(planner.dijkstra(map));
 		// grow obstacles
 		// for(Polygon p : map.polygons) {
 		//    ? = p.grow();
