@@ -31,10 +31,11 @@ public class PathPlanner {
 				if(!adj.known)
 				{
 					//wrong
-					if(current.dist + map.adjacencyMatrix[i][i] < adj.dist)
+					int j = points.getIndex(current);
+					if(current.dist + map.adjacencyMatrix[j][i] < adj.dist)
 					{
 						//wrong
-						adj.dist = current.dist + map.adjacencyMatrix[i][i];
+						adj.dist = current.dist + map.adjacencyMatrix[j][i];
 						
 						adj.path = current;
 					}
