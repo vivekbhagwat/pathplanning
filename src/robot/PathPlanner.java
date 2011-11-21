@@ -23,8 +23,11 @@ public class PathPlanner {
 		Point current;
 		while((current = pq.poll()) != null)
 		{
+			current.known = true;
 			ArrayList<Point> next = possibleNextPoints(current, map);
 			Point adj = null;
+			
+			
 			for(int i = 0; i < next.size(); i++)
 			{
 				adj = next.get(i);
