@@ -11,7 +11,7 @@ public class PathPlanner {
 		LinkedList<Point> path = new LinkedList<Point>();
 		ArrayList<Point> points = map.nodes;
 		map.start.dist = 0.0;
-		path.add(map.start);		
+		// path.add(map.start);		
 		
 		PriorityQueue<Point> pq = new PriorityQueue<Point>(points.size());
 		
