@@ -70,8 +70,9 @@ public class PathPlanner {
 		
 		
 		// open the map 
-		// Map map = new Map(args[0]);
-		
+		Map map = new Map(args[0]);
+		PathPlanner planner = new PathPlanner();
+		planner.dijkstra(map);
 		// grow obstacles
 		// for(Polygon p : map.polygons) {
 		//    ? = p.grow();
