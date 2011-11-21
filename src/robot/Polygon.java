@@ -23,6 +23,19 @@ public class Polygon
 		return null;			
 	}
 	
+	public static Point intersect(Point p1, Point p2, Point p3, Point p4)
+	{
+		double t1, t2, t3, t4, t5, t6, t7;
+		t1 = p1.x - p2.x;
+		t2 = p3.x - p4.x;
+		t3 = p1.y - p2.y;
+		t4 = p3.y - p4.y;
+		t5 = p1.x*p2.y - p1.y*p2.x;
+		t6 = p3.x*p4.y - p3.y*p4.x;
+		t7 = t1*t4 - t3*t2;
+		return new Point((t5*t2 - t1*t6)/t7, (t5*t4 - t3*t6)/t7);
+	}
+	
 	public Polygon grow(double amount)
 	{
 		assert vertices.size() == numVertices;
@@ -61,15 +74,7 @@ public class Polygon
 			eright2 = right.translate(normright);
 			
 			/* find the intersection */
-			double t1, t2, t3, t4, t5, t6, t7;
-			t1 = eleft1.x - eleft2.x;
-			t2 = eright1.x - eright2.x;
-			t3 = eleft1.y - eleft2.y;
-			t4 = eright1.y - eright2.y;
-			t5 = eleft1.x*eleft2.y - eleft1.y*eleft2.x;
-			t6 = eright1.x*eright2.y - eright1.y*eright2.x;
-			t7 = t1*t4 - t3*t2;
-			p = new Point((t5*t2 - t1*t6)/t7, (t5*t4 - t3*t6)/t7);
+			p = intersect(eleft1, eleft2, eright1, eright2);
 					
 			poly.vertices.set(i, p);
 		}
