@@ -68,7 +68,7 @@ public class PathPlanner {
 		return path;
 	}
 	
-	private ArrayList<Point> possibleNextPoints(Point current, Map map)
+	public static ArrayList<Point> possibleNextPoints(Point current, Map map)
 	{
 		// gets all the points, except the immediate predecessor
 		ArrayList<Point> next = new ArrayList<Point>();
