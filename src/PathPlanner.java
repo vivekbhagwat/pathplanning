@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
 public class PathPlanner {
 	
 	public LinkedList<Point> dijkstra(Map map)
@@ -35,9 +39,10 @@ public class PathPlanner {
 				adj = next.get(i);
 				
 				// finds index of the point
-				int ind = 0;
-				while(!points.get(ind).equals(adj))
-					ind++;
+				int ind = points.indexOf(adj); //built-in
+				// int ind = 0;
+				// while(!points.get(ind).equals(adj))
+					// ind++;
 				
 				if(!adj.known)
 				{
@@ -75,11 +80,22 @@ public class PathPlanner {
 		return next;
 	}
 	
+	public void createGUI(Map robotMap)
+	{
+		JFrame frame = new JFrame();
+		frame.add(new MapComponent(robotMap));
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
 	public static void main(String [] args) {
 		// open the map 
 		Map map = new Map(args[0], args[1]);
 		// Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
 		System.out.println(planner.dijkstra(map));
+		planner.createGUI(map);
 	} 
 }
