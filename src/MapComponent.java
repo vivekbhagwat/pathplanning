@@ -43,6 +43,10 @@ public class MapComponent extends JComponent
 					maxy = p.y;
 			}
 		}
+		minx -= (maxx-minx)*0.25;
+		maxx += (maxx-minx)*0.25;
+		miny -= (maxy-miny)*0.25;
+		maxy += (maxy-miny)*0.25;
 	}
 	
 	public void setPath(LinkedList<Point> path)
@@ -63,7 +67,6 @@ public class MapComponent extends JComponent
 			for(int j = 0; j < points.size(); j++)
 			{
 				drawVertex(g2, points.get(j));
-				// System.out.println(points.get(i));
 				if (j < points.size()-1)
 				{
 					drawEdge(points.get(j), points.get(j+1));

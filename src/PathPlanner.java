@@ -50,7 +50,7 @@ public class PathPlanner {
 						adj.path = current;
 						// comp.drawPossiblePaths(adj, )
 					}
-					pq.add(adj);
+					// pq.add(adj);
 				}
 			}
 		}
