@@ -34,20 +34,13 @@ public class PathPlanner {
 			ArrayList<Point> next = PathPlanner.possibleNextPoints(current, map);
 			Point adj = null;
 			
-			// finds index of the point
-			// so dumb, but no one cares
-			int j = 0;
-			while(!points.get(j).equals(current))
-				j++;
+			int j = points.indexOf(current);
 			for(int i = 0; i < next.size(); i++)
 			{
 				adj = next.get(i);
 				
 				// finds index of the point
 				int ind = points.indexOf(adj); //built-in
-				// int ind = 0;
-				// while(!points.get(ind).equals(adj))
-					// ind++;
 				
 				if(!adj.known)
 				{
