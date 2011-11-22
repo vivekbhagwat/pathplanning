@@ -12,6 +12,8 @@ public class MapComponent extends JComponent
 	private Map robotMap;
 	private Graphics2D g2;
 	private LinkedList<Point> finalPath;
+	// for bounding box
+	private double minx, miny, maxx, maxy;
 	
 	public MapComponent(Map robotMap)
 	{
@@ -19,6 +21,28 @@ public class MapComponent extends JComponent
 		mapHeight = 0;
 		mapWidth = 0;
 		this.finalPath = null;
+		
+		/* get a bounding box */
+		ArrayList<Polygon> obstacles = robotMap.obstacles;
+		// init values to sane values
+		minx = obstacles.get(0).vertices.get(0).x;
+		maxx = obstacles.get(0).vertices.get(0).x;
+		miny = obstacles.get(0).vertices.get(0).y;
+		maxy = obstacles.get(0).vertices.get(0).y;
+		for(Polygon poly : obstacles)
+		{
+			for(Point p : poly.vertices)
+			{
+				if(p.x < minx)
+					minx = p.x;
+				if(p.x > maxx)
+					maxx = p.x;
+				if(p.y < miny)
+					miny = p.y;
+				if(p.y > maxy)
+					maxy = p.y;
+			}
+		}
 	}
 	
 	public void setPath(LinkedList<Point> path)
@@ -127,27 +151,33 @@ public class MapComponent extends JComponent
 	
 	private void drawVertex(Graphics2D g2, Point pt)
 	{
-		drawPoint(g2, pt, 5, null);//pt.toString());
+		drawPoint(g2, pt, 5, null);
 	}
 	
 	private void drawPoint(Graphics2D g2, Point pt, int size, String str)
 	{
-		g2.fillOval(transform(pt.x), transform(pt.y), size, size);
+		Point ptt = transform(pt);
+		g2.fillOval((int)ptt.x, (int)ptt.y, size, size);
 		if (str != null)
 		{
-			// g2.drawString("(" + ((Double)(pt.x)).toString() + ", " + ((Double)(pt.y)).toString() + ")",
-			g2.drawString(str,transform(pt.x), transform(pt.y));
+			g2.drawString(str, (int)ptt.x, (int)ptt.y);
 		}
 	}
 	
 	private void drawEdge(Point pt1, Point pt2)
 	{
-		g2.drawLine(transform(pt1.x), transform(pt1.y),
-			transform(pt2.x), transform(pt2.y));
+		Point pp1 = transform(pt1);
+		Point pp2 = transform(pt2);
+		g2.drawLine((int)pp1.x, (int)pp1.y, (int)pp2.x, (int)pp2.y);
 	}
 	
-	private int transform(double val)
+	private Point transform(Point val)
 	{
-		return 500+20*(int)val;
+		double w = getWidth();
+		double h = getHeight();
+		boolean wideWidth = (w/h) > (maxx-minx)/(maxy-miny);
+		double dim = wideWidth ? h : w;
+		return new Point((val.x-minx)/(maxx-minx)*dim, (val.y-miny)/(maxy-miny)*dim);
+
 	}
 }
