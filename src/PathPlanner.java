@@ -8,6 +8,8 @@ import java.awt.event.*;
 
 public class PathPlanner {
 	
+	private MapComponent comp;
+	
 	public LinkedList<Point> dijkstra(Map map)
 	{
 		LinkedList<Point> path = new LinkedList<Point>();
@@ -48,9 +50,9 @@ public class PathPlanner {
 				{
 					if(current.dist + map.adjacencyMatrix[j][ind] < adj.dist)
 					{
-						//wrong
 						adj.dist = current.dist + map.adjacencyMatrix[j][ind];
 						adj.path = current;
+						// comp.drawPossiblePaths(adj, )
 					}
 					pq.add(adj);
 				}
@@ -83,7 +85,8 @@ public class PathPlanner {
 	public void createGUI(Map robotMap)
 	{
 		JFrame frame = new JFrame();
-		frame.add(new MapComponent(robotMap));
+		comp = new MapComponent(robotMap);
+		frame.add(comp);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -95,7 +98,9 @@ public class PathPlanner {
 		Map map = new Map(args[0], args[1]);
 		// Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
-		System.out.println(planner.dijkstra(map));
 		planner.createGUI(map);
+		LinkedList<Point> path = planner.dijkstra(map);
+		System.out.println(path);
+		planner.comp.setPath(path);
 	} 
 }
