@@ -26,7 +26,7 @@ public class PathPlanner {
 		while((current = pq.poll()) != null)
 		{
 			current.known = true;
-			ArrayList<Point> next = possibleNextPoints(current, map);
+			ArrayList<Point> next = PathPlanner.possibleNextPoints(current, map);
 			Point adj = null;
 			
 			// finds index of the point
@@ -68,7 +68,7 @@ public class PathPlanner {
 		return path;
 	}
 	
-	private ArrayList<Point> possibleNextPoints(Point current, Map map)
+	public static ArrayList<Point> possibleNextPoints(Point current, Map map)
 	{
 		// gets all the points, except the immediate predecessor
 		ArrayList<Point> next = new ArrayList<Point>();
