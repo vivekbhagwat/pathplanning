@@ -39,7 +39,7 @@ public class MapComponent extends JComponent
 			for(int j = 0; j < points.size(); j++)
 			{
 				drawVertex(g2, points.get(j));
-				System.out.println(points.get(i));
+				// System.out.println(points.get(i));
 				if (j < points.size()-1)
 				{
 					drawEdge(points.get(j), points.get(j+1));
