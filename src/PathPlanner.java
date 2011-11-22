@@ -28,7 +28,7 @@ public class PathPlanner {
 		}
 		
 		Point current;
-		while((current = pq.poll()) != null)
+		while((current = pq.poll()) != null && current.dist != Double.POSITIVE_INFINITY)
 		{
 			current.known = true;
 			ArrayList<Point> next = PathPlanner.possibleNextPoints(current, map);
@@ -44,6 +44,7 @@ public class PathPlanner {
 				
 				if(!adj.known)
 				{
+					pq.remove(adj);
 					if(current.dist + map.adjacencyMatrix[j][ind] < adj.dist)
 					{
 						adj.dist = current.dist + map.adjacencyMatrix[j][ind];
