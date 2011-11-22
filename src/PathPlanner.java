@@ -102,11 +102,12 @@ public class PathPlanner {
 		}
 	}
 	
-	public void createGUI(Map robotMap)
+	public void createGUI(Map robotMap, LinkedList<Point> path)
 	{
 		JFrame frame = new JFrame();
 		comp = new MapComponent(robotMap);
 		frame.add(comp);
+		comp.setPath(path);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -119,10 +120,9 @@ public class PathPlanner {
 		Map map = new Map(args[0], args[1]);
 		// Map map = new Map(args[0], new Point(-1.0,-1.0), new Point(2.0,2.0));
 		PathPlanner planner = new PathPlanner();
-		planner.createGUI(map);
 		LinkedList<Point> path = planner.dijkstra(map);
+		planner.createGUI(map, path);
 		System.out.println(path);
 		writeOutPath("path.txt", path);
-		planner.comp.setPath(path);
 	} 
 }

@@ -178,6 +178,5 @@ public class MapComponent extends JComponent
 		boolean wideWidth = (w/h) > (maxx-minx)/(maxy-miny);
 		double dim = wideWidth ? h : w;
 		return new Point((val.x-minx)/(maxx-minx)*dim, (val.y-miny)/(maxy-miny)*dim);
-
 	}
 }
