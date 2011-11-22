@@ -63,6 +63,15 @@ public class Point implements Comparable<Point>
 		return new Point(this.x + x, this.y + y);
 	}
 	
+	public Point rotate(double dangle)
+	{
+		double angle = Math.atan2(this.y, this.x);
+		double dist = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+		double x = dist*Math.cos(angle + dangle);
+		double y = dist*Math.sin(angle + dangle);
+		return new Point(x,y);
+	}
+	
 	public Point clone()
 	{
 		return new Point(this.x, this.y);
