@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Map
 {
-	public final double ROBOT_SIZE = 1.0; //random value?
+	public final double ROBOT_SIZE = 0.35; //random value?
 	public ArrayList<Point> boundary, nodes;
 	public ArrayList<Polygon> obstacles;
 	public double[][] adjacencyMatrix;

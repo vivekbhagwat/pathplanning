@@ -73,39 +73,6 @@ public class PathPlanner {
 		return path;
 	}
 	
-	public static void writeOutPath(String path, LinkedList<Point> rendezvousPoints)
-	{
-		/* first, translate everything so the origin is at the start point */
-		LinkedList<Point> copy1 = new LinkedList<Point>();
-		Point begin = rendezvousPoints.get(0);
-		for(Point p : rendezvousPoints)
-		{
-			Point translated = p.translate(begin);
-			copy1.add(translated);
-		}
-		/* and now rotate all the points so the robot moves in the +x direction off the bat */
-		LinkedList<Point> copy2 = new LinkedList<Point>();
-		Point dir = copy1.get(1);
-		double angle = Math.atan2(dir.y, dir.x);
-		for(Point p : copy1)
-		{
-			Point rotated = p.rotate(-angle);
-			copy2.add(rotated);
-		}
-		/* and then we write out the file */
-		try {
-			FileWriter fstream = new FileWriter(path);
-			BufferedWriter out = new BufferedWriter(fstream);
-			for(Point p : copy2)
-			{
-				out.write(p.x + " " + p.y +"\n");	
-			}
-			out.close();
-		} catch (IOException e){
-			System.err.println("Error: " + e.getMessage());
-		}
-	}
-	
 	public static ArrayList<Point> possibleNextPoints(Point current, Map map)
 	{
 		// gets all the points, except the immediate predecessor
@@ -116,6 +83,30 @@ public class PathPlanner {
 				next.add(map.nodes.get(i));
 		}
 		return next;
+	}
+	
+	public static void writeOutPath(String path, LinkedList<Point> rendezvousPoints)
+	{
+		/* first, translate everything so the origin is at the start point */
+		LinkedList<Point> copy = new LinkedList<Point>();
+		Point begin = rendezvousPoints.get(0);
+		for(Point p : rendezvousPoints)
+		{
+			Point translated = p.translate(begin.mult(-1.0));
+			copy.add(translated);
+		}
+		/* and then we write out the file */
+		try {
+			FileWriter fstream = new FileWriter(path);
+			BufferedWriter out = new BufferedWriter(fstream);
+			for(Point p : copy)
+			{
+				out.write(p.x + " " + p.y +"\n");	
+			}
+			out.close();
+		} catch (IOException e){
+			System.err.println("Error: " + e.getMessage());
+		}
 	}
 	
 	public void createGUI(Map robotMap)
@@ -138,6 +129,7 @@ public class PathPlanner {
 		planner.createGUI(map);
 		LinkedList<Point> path = planner.dijkstra(map);
 		System.out.println(path);
+		writeOutPath("path.txt", path);
 		planner.comp.setPath(path);
 	} 
 }
