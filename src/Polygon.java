@@ -164,6 +164,76 @@ public class Polygon
 		return pts;
 	}
 	
+	public Polygon makeConvex()
+	{
+		// System.out.println(vertices);
+		Polygon p = clone();
+		ArrayList<Point> pts = (ArrayList<Point>)vertices.clone();
+		
+		//sort!!!
+		for(int i = 0; i < pts.size(); i++)
+		{
+			for(int j = i; j < pts.size(); j++)
+			{
+				if(pts.get(j).x < pts.get(i).x)
+					swap(pts, i, j);
+				else if(pts.get(j).x == pts.get(i).x)
+				{
+					if(pts.get(j).y < pts.get(i).y)
+						swap(pts,i,j);
+				}
+			}
+		}
+		
+		ArrayList<Point> lower = new ArrayList<Point>();
+		for(Point pt : pts)
+		{
+			while(lower.size() >= 2 && Point.ccw(lower.get(lower.size()-2), lower.get(lower.size()-1), pt ) <= 0)
+				lower.remove(lower.size()-1); //pop
+			lower.add(pt);
+		}
+		lower.remove(lower.size()-1);
+		
+		ArrayList<Point> upper = new ArrayList<Point>();
+
+		//sort reverse!!!
+		for(int i = 0; i < pts.size(); i++)
+		{
+			for(int j = i; j < pts.size(); j++)
+			{
+				if(pts.get(j).x > pts.get(i).x)
+					swap(pts, i, j);
+				else if(pts.get(j).x == pts.get(i).x)
+				{
+					if(pts.get(j).y > pts.get(i).y)
+						swap(pts,i,j);
+				}
+			}
+		}		
+
+		for(Point pt : pts)
+		{
+			while(upper.size() >= 2 && Point.ccw(upper.get(upper.size()-2), upper.get(upper.size()-1), pt ) <= 0)
+				upper.remove(upper.size()-1); //pop
+			upper.add(pt);
+		}
+		upper.remove(upper.size()-1);
+		
+		lower.addAll(upper);
+		
+		p.vertices = (ArrayList<Point>)(lower.clone());
+		p.numVertices = p.vertices.size();
+		return p;
+	}
+	
+	//mutator
+	private void swap(ArrayList<Point> pts, int i, int j)
+	{
+		Point temp = pts.get(i);
+		pts.set(i, pts.get(j));
+		pts.set(j, temp);
+	}
+	
 	public String toString()
 	{
 		String s = "[Polygon ";
