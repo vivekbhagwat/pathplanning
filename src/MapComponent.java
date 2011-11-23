@@ -60,6 +60,7 @@ public class MapComponent extends JComponent
 		mapHeight = getHeight();
 		mapWidth = getWidth();
 		
+		/* drawn the obstacles */
 		ArrayList<Polygon> obstacles = robotMap.obstacles;
 		for(int i = 0; i < obstacles.size(); i++)
 		{
@@ -78,7 +79,7 @@ public class MapComponent extends JComponent
 		drawPoint(g2, robotMap.start, 10, "Start");
 		drawPoint(g2, robotMap.goal, 10, "Goal");
 		
-		//drawPossiblePaths();
+		drawPossiblePaths();
 				
 		
 		ArrayList<Point> bound = robotMap.boundary;
@@ -101,6 +102,8 @@ public class MapComponent extends JComponent
 		
 		for(int i = 0; i < adjMat.length; i++)
 		{
+			if(i != 0)
+				continue;
 			for(int j = 0; j < adjMat.length; j++)
 			{
 				if(adjMat[i][j] != Double.POSITIVE_INFINITY)

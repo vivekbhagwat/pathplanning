@@ -54,6 +54,7 @@ public class PathPlanner {
 					pq.add(adj);
 				}
 			}
+			System.out.print(current.path + " ");
 			System.out.println(current);
 		}
 		Point end = map.goal;

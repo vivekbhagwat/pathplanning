@@ -82,8 +82,8 @@ public class Polygon
 		int i;
 		/* calculate the center of the polygon */
 		for(i = 0; i < numVertices; i++)
-			center.translate(vertices.get(i));
-		center.mult(1/(double)numVertices);
+			center = center.translate(vertices.get(i));
+		center = center.mult(1/((double)numVertices));
 		
 		/* move the line segments out */
 		for(i = 0; i < numVertices; i++) {
@@ -93,14 +93,14 @@ public class Polygon
 			right = this.vertices.get((i+1) % numVertices);
 			
 			/* turn the normals right side out (center is always inside the polygon */
-			normleft  = left.sub(p).unit().perpendicular();
-			normright = p.sub(right).unit().perpendicular();
-			if(normleft.dot(center) < 0)
-				normleft.mult(-1.0);
-			if(normright.dot(center) < 0)
-				normright.mult(-1.0);
-			normleft.mult(amount);
-			normright.mult(amount);
+			normleft  = left.sub(p).perpendicular().unit();
+			normright = p.sub(right).perpendicular().unit();
+			if(normleft.dot(p.sub(center)) < 0)
+				normleft = normleft.mult(-1.0);
+			if(normright.dot(p.sub(center)) < 0)
+				normright = normright.mult(-1.0);
+			normleft = normleft.mult(amount);
+			normright = normright.mult(amount);
 			
 			/* move the points out */
 			eleft1 = left.translate(normleft);

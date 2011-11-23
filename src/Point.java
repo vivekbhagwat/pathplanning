@@ -29,12 +29,14 @@ public class Point implements Comparable<Point>
 	{
 		return new Point(this.x - p.x, this.y - p.y);
 	}
-	public Point mult(Double m)
+	public Point mult(double m)
 	{
 		return new Point(this.x*m, this.y*m);
 	}
 	public Point unit()
 	{
+		if(this.distFrom(new Point(0,0)) == 0.0)
+			return new Point(0,0);
 		return this.clone().mult(1/this.distFrom(new Point(0,0)));
 	}
 	

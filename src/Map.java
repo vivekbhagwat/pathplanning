@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Map
 {
-	public final double ROBOT_SIZE = 0.35; //random value?
+	public final double ROBOT_SIZE = 0.33; //random value?
 	public ArrayList<Point> boundary, nodes;
 	public ArrayList<Polygon> obstacles;
 	public double[][] adjacencyMatrix;
@@ -69,7 +69,7 @@ public class Map
 					if(obstacles.get(k).intersect(begin, end))
 						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;						
 					else
-						adjacencyMatrix[i][j] = nodes.get(i).distFrom(nodes.get(j));
+						adjacencyMatrix[i][j] = begin.distFrom(end);
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class Map
 				}
 				// don't grow the first one
 				if(i > 0)
-					polygons[i].grow(ROBOT_SIZE/2);
+					polygons[i] = polygons[i].grow(ROBOT_SIZE/2);
 				obstacles.add(polygons[i]);
 				addToMap(polygons[i]);
 			}
