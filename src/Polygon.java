@@ -144,47 +144,62 @@ public class Polygon
 	
 	public Polygon makeConvex()
 	{
-		System.out.println(vertices);
+		// System.out.println(vertices);
 		Polygon p = clone();
-		ArrayList<Point> pts = new ArrayList<Point>();
-		pts.add(new Point(0.,0.));
-		pts.addAll(vertices);
-		int min_y_index = 1;
-		for(int i = 1; i < pts.size(); i++)
-		{
-			if (pts.get(min_y_index).y > pts.get(i).y)
-				min_y_index = i;
-		}
-		swap(pts, 1, min_y_index);
+		ArrayList<Point> pts = (ArrayList<Point>)vertices.clone();
 		
-		pts.set(0, pts.get(pts.size() - 1));
-		
-		int m = 2;
-		for(int i = 3; i < pts.size(); i++)
+		//sort!!!
+		for(int i = 0; i < pts.size(); i++)
 		{
-			System.out.println("m: " + m + " i: " + i);
-			while(i < pts.size()-1 && Point.ccw(pts.get(m-1), pts.get(m), pts.get(i)) <= 0 )
+			for(int j = i; j < pts.size(); j++)
 			{
-				if(m == 2)
+				if(pts.get(j).x < pts.get(i).x)
+					swap(pts, i, j);
+				else if(pts.get(j).x == pts.get(i).x)
 				{
-					swap(pts, m, i);
-					i += 1;
-				}
-				else
-				{
-					m -= 1;
+					if(pts.get(j).y < pts.get(i).y)
+						swap(pts,i,j);
 				}
 			}
-			m++;
-			swap(pts, m, i);
 		}
-		p.vertices = new ArrayList<Point>(numVertices);
-		System.out.println(m);
-		System.out.println("pts:" + pts);
-		for(int i = 1; i <= m; i++)
+		
+		ArrayList<Point> lower = new ArrayList<Point>();
+		for(Point pt : pts)
 		{
-			p.vertices.add(pts.get(i));
+			while(lower.size() >= 2 && Point.ccw(lower.get(lower.size()-2), lower.get(lower.size()-1), pt ) <= 0)
+				lower.remove(lower.size()-1); //pop
+			lower.add(pt);
 		}
+		lower.remove(lower.size()-1);
+		
+		ArrayList<Point> upper = new ArrayList<Point>();
+
+		//sort reverse!!!
+		for(int i = 0; i < pts.size(); i++)
+		{
+			for(int j = i; j < pts.size(); j++)
+			{
+				if(pts.get(j).x > pts.get(i).x)
+					swap(pts, i, j);
+				else if(pts.get(j).x == pts.get(i).x)
+				{
+					if(pts.get(j).y > pts.get(i).y)
+						swap(pts,i,j);
+				}
+			}
+		}		
+
+		for(Point pt : pts)
+		{
+			while(upper.size() >= 2 && Point.ccw(upper.get(upper.size()-2), upper.get(upper.size()-1), pt ) <= 0)
+				upper.remove(upper.size()-1); //pop
+			upper.add(pt);
+		}
+		upper.remove(upper.size()-1);
+		
+		lower.addAll(upper);
+		
+		p.vertices = (ArrayList<Point>)(lower.clone());
 		p.numVertices = p.vertices.size();
 		return p;
 	}
