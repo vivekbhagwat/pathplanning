@@ -32,7 +32,7 @@ public class Polygon
 		t5 = p1.x*p2.y - p1.y*p2.x;
 		t6 = p3.x*p4.y - p3.y*p4.x;
 		t7 = t1*t4 - t3*t2;
-		if(t7 == 0)
+		if(t7 == 0.0f)
 			return null;
 		return new Point((t5*t2 - t1*t6)/t7, (t5*t4 - t3*t6)/t7);
 	}
@@ -62,13 +62,35 @@ public class Polygon
 			p3 = this.vertices.get(i % numVertices).clone();
 			p4 = this.vertices.get((i+1) % numVertices).clone();
 			inter = intersectLineSegments(p1,p2, p3,p4);
-			if(inter != null) {
-				if(!inter.equal(p1) && !inter.equal(p2)) {
+			if(inter != null)
+				if(!(inter.equal(p1) || inter.equal(p2)))
 					return true;
-				}
+			/* allow movement along a polygon  */
+			if((p1.equal(p3) && p2.equal(p4)) || (p2.equal(p3) && p1.equal(p4))) {
+				return false;
 			}
 		}
 		return false;
+	}
+	
+	/* find if a point is interior to the polygon */
+	public boolean interior(Point p)
+	{
+		assert vertices.size() == numVertices;
+		/* for each edge, check if there's an intersection */
+		Point dir = new Point(1.0, 1.0);
+		Point p2 = p.translate(dir);
+		Point p3, p4, inter;
+		int countInter = 0;
+		for(int i = 0; i < numVertices; i++) {
+			p3 = this.vertices.get(i % numVertices).clone();
+			p4 = this.vertices.get((i+1) % numVertices).clone();
+			inter = intersectLines(p,p2, p3,p4);
+			if(inter != null && dir.dot(inter.sub(p)) > 0) {
+				countInter += 1;
+			}
+		}
+		return countInter % 2 != 0;
 	}
 	
 	public Polygon grow(double amount)

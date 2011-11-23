@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Map
 {
-	public final double ROBOT_SIZE = 0.33; //random value?
+	public final double ROBOT_SIZE = 0.35; //random value?
 	public ArrayList<Point> boundary, nodes;
 	public ArrayList<Polygon> obstacles, originalObstacles;
 	public double[][] adjacencyMatrix;
@@ -66,11 +66,31 @@ public class Map
 			{
 				Point begin = nodes.get(i);
 				Point end   = nodes.get(j);
-				for(int k = 0; k < obstacles.size(); k++)
-					if(obstacles.get(k).intersect(begin, end))
-						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;						
-					else
-						adjacencyMatrix[i][j] = begin.distFrom(end);
+				adjacencyMatrix[i][j] = begin.distFrom(end);
+				for(int k = 0; k < obstacles.size(); k++) {
+					Polygon poly = obstacles.get(k); 
+					/* check for interior crossing of polygons */
+					int ind1 = poly.vertices.indexOf(begin);
+					int ind2 = poly.vertices.indexOf(end);
+					if(ind1 > -1 && ind2 > -1 &&
+					   (Math.abs(ind1-ind2) != 1 || Math.abs(ind1-ind2) != poly.vertices.size()-1))
+					{
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						break;
+					}
+					/* check for interior overlapping polygon crossings */
+					/* if(k != 0 && (poly.interior(begin) || poly.interior(end)))
+					{
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						break;
+					} */
+					/* do more mundane intersection checking */
+					if(poly.intersect(begin, end))
+					{
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						break;
+					}
+				}
 			}
 		}
 	}

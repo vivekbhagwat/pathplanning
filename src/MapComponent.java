@@ -12,6 +12,7 @@ public class MapComponent extends JComponent//JScrollPane
 	private Map robotMap;
 	private Graphics2D g2;
 	private LinkedList<Point> finalPath;
+	double margins = 0.1;
 	// for bounding box
 	private double minx, miny, maxx, maxy;
 	
@@ -43,10 +44,10 @@ public class MapComponent extends JComponent//JScrollPane
 					maxy = p.y;
 			}
 		}
-		minx -= (maxx-minx)*0.25;
-		maxx += (maxx-minx)*0.25;
-		miny -= (maxy-miny)*0.25;
-		maxy += (maxy-miny)*0.25;
+		minx -= (maxx-minx)*margins;
+		maxx += (maxx-minx)*margins;
+		miny -= (maxy-miny)*margins;
+		maxy += (maxy-miny)*margins;
 	}
 	
 	public void setPath(LinkedList<Point> path)
@@ -72,15 +73,15 @@ public class MapComponent extends JComponent//JScrollPane
 			for(int j = 0; j < points.size(); j++)
 			{
 				drawVertex(g2, points.get(j));
-				g2.setColor(Color.RED);
+				g2.setColor(Color.GRAY);
 				drawVertex(g2, originalPoints.get(j));
-				g2.setColor(Color.BLACK);				
+				g2.setColor(Color.RED);				
 				if (j < points.size()-1)
 				{
 					drawEdge(points.get(j), points.get(j+1));
-					g2.setColor(Color.RED);
+					g2.setColor(Color.GRAY);
 					drawEdge(originalPoints.get(j), originalPoints.get(j+1));
-					g2.setColor(Color.BLACK);					
+					g2.setColor(Color.RED);					
 				}
 			}
 			drawEdge(points.get(0), points.get(points.size()-1));
@@ -92,8 +93,8 @@ public class MapComponent extends JComponent//JScrollPane
 		drawPoint(g2, robotMap.start, 10, "Start");
 		drawPoint(g2, robotMap.goal, 10, "Goal");
 		
+		g2.setColor(Color.BLUE);
 		drawPossiblePaths();
-				
 		
 		ArrayList<Point> bound = robotMap.boundary;
 		for(int i = 0; i < bound.size(); i++)
@@ -103,11 +104,8 @@ public class MapComponent extends JComponent//JScrollPane
 		drawPath();
 	}
 	
-	//drawEdge(g2, pt, points.get(i));
 	private void drawPossiblePaths()
 	{
-		// for(int i = 0; i < paths.size(); i++)
-			// drawEdge(g2, pt, paths.get(i));
 		double[][] adjMat = robotMap.adjacencyMatrix;
 		
 		ArrayList<Point> points = robotMap.nodes;
@@ -115,8 +113,6 @@ public class MapComponent extends JComponent//JScrollPane
 		
 		for(int i = 0; i < adjMat.length; i++)
 		{
-			if(i != 0)
-				continue;
 			for(int j = 0; j < adjMat.length; j++)
 			{
 				if(adjMat[i][j] != Double.POSITIVE_INFINITY)

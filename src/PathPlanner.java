@@ -49,8 +49,10 @@ public class PathPlanner {
 					{
 						adj.dist = current.dist + map.adjacencyMatrix[j][ind];
 						adj.path = current;
-						// comp.drawPossiblePaths(adj, )
 					}
+					System.out.print(current + " ");
+					System.out.print(adj + " ");
+					System.out.println(adj.dist);
 					pq.add(adj);
 				}
 			}
