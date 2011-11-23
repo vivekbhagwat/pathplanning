@@ -104,9 +104,13 @@ public class Map
 					polygons[i].add(new Point(line));
 					last.add(new Point(line));
 				}
+				
 				// don't grow the first one
 				if(i > 0)
+				{
+					polygons[i] = polygons[i].makeConvex();
 					polygons[i] = polygons[i].grow(ROBOT_SIZE/2);
+				}
 				obstacles.add(polygons[i]);
 				addToMap(polygons[i]);
 			}
