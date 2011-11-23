@@ -5,7 +5,7 @@ public class Map
 {
 	public final double ROBOT_SIZE = 0.35; //random value?
 	public ArrayList<Point> boundary, nodes;
-	public ArrayList<Polygon> obstacles;
+	public ArrayList<Polygon> obstacles, originalObstacles;
 	public double[][] adjacencyMatrix;
 	public Point start, goal;
 	
@@ -38,6 +38,7 @@ public class Map
 		boundary = new ArrayList<Point>();
 		nodes = new ArrayList<Point>();
 		obstacles = new ArrayList<Polygon>();
+		originalObstacles = new ArrayList<Polygon>();
 		this.start = start;
 		this.goal = goal;
 		nodes.add(start);
@@ -95,10 +96,13 @@ public class Map
 			{
 				int numVertices = Integer.parseInt(br.readLine());
 				polygons[i] = new Polygon(numVertices);				
+				originalObstacles.add(new Polygon(numVertices));
+				Polygon last = originalObstacles.get(originalObstacles.size()-1);
 				for(int j = 0; j < numVertices; j++)
 				{
 					String line = br.readLine();
 					polygons[i].add(new Point(line));
+					last.add(new Point(line));
 				}
 				// don't grow the first one
 				if(i > 0)
