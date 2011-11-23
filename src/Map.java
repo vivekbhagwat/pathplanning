@@ -30,7 +30,7 @@ public class Map
 	{
 		ArrayList<Point> points = processGoalFile(goalFile);
 		assert points != null;
-		System.out.println(points);
+		/* System.out.println(points); */
 		Point start = points.get(0);
 		Point goal  = points.get(1);
 		
@@ -69,21 +69,26 @@ public class Map
 				adjacencyMatrix[i][j] = begin.distFrom(end);
 				for(int k = 0; k < obstacles.size(); k++) {
 					Polygon poly = obstacles.get(k); 
-					/* check for interior crossing of polygons */
-					int ind1 = poly.vertices.indexOf(begin);
-					int ind2 = poly.vertices.indexOf(end);
-					if(ind1 > -1 && ind2 > -1 &&
-					   (Math.abs(ind1-ind2) != 1 || Math.abs(ind1-ind2) != poly.vertices.size()-1))
-					{
-						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
-						break;
-					}
-					/* check for interior overlapping polygon crossings */
-					/* if(k != 0 && (poly.interior(begin) || poly.interior(end)))
+					/* check for interior overlapping polygon crossings */ // !!!
+					/* if(k > 0 && (poly.interior(begin) || poly.interior(end)))
 					{
 						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
 						break;
 					} */
+					/* check for interior crossing of polygons */
+					int ind1 = poly.vertices.indexOf(begin);
+					int ind2 = poly.vertices.indexOf(end);
+					if(ind1 > -1 && ind2 > -1 &&
+					   (Math.abs(ind1-ind2) != 1 && Math.abs(ind1-ind2) != poly.vertices.size()-1))
+					{
+						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						break;
+					} else if(ind1 > -1 && ind2 > -1) {
+						System.out.print(ind1 + " ");
+						System.out.print(ind2 + " ");
+						System.out.print(poly.vertices.size() + " ");
+						System.out.println(poly.numVertices);
+					}
 					/* do more mundane intersection checking */
 					if(poly.intersect(begin, end))
 					{
@@ -131,6 +136,8 @@ public class Map
 					polygons[i] = polygons[i].makeConvex();
 					polygons[i] = polygons[i].grow(ROBOT_SIZE/2);
 				}
+				System.out.println(polygons[i].vertices);
+				
 				obstacles.add(polygons[i]);
 				addToMap(polygons[i]);
 			}

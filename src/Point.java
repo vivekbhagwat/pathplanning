@@ -1,5 +1,6 @@
 public class Point implements Comparable<Point>
 {
+	private static final double THRESH_FLOAT = 0.001;
 	public double x;
 	public double y;
 	// below is mostly for the path finding algorithms
@@ -82,7 +83,7 @@ public class Point implements Comparable<Point>
 	
 	public boolean equal(Point other)
 	{
-		return this.x == other.x && this.y == other.y;
+		return this.distFrom(other) < THRESH_FLOAT;
 	}
 	
 	@Override

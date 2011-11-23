@@ -50,9 +50,9 @@ public class PathPlanner {
 						adj.dist = current.dist + map.adjacencyMatrix[j][ind];
 						adj.path = current;
 					}
-					System.out.print(current + " ");
+					/* System.out.print(current + " ");
 					System.out.print(adj + " ");
-					System.out.println(adj.dist);
+					System.out.println(adj.dist); */
 					pq.add(adj);
 				}
 			}

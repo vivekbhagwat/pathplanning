@@ -52,6 +52,20 @@ public class Polygon
 		return p;
 	}
 	
+	/* Ray starting at p1, in direction of p2, intersecting with segment p3/p4 */
+	public static Point intersectRay(Point p1, Point p2, Point p3, Point p4)
+	{
+		double d1, d2;
+		Point p = intersectLines(p1, p2, p3, p4);
+		if(p == null)
+			return null;
+		d2 = p3.distFrom(p4);
+		// check the line intersections themselves
+		if((d2 < p.distFrom(p3) || d2 < p.distFrom(p4)) || (p2.sub(p1).dot(p) < 0))
+			return null;
+		return p;
+	}
+	
 	/* do we ever intersect the polygon? */
 	public boolean intersect(Point p1, Point p2)
 	{
@@ -62,10 +76,15 @@ public class Polygon
 			p3 = this.vertices.get(i % numVertices).clone();
 			p4 = this.vertices.get((i+1) % numVertices).clone();
 			inter = intersectLineSegments(p1,p2, p3,p4);
-			if(inter != null)
-				if(!(inter.equal(p1) || inter.equal(p2)))
+			if(inter != null){
+				if(!(inter.equal(p1) || inter.equal(p2))) {
+					/* System.out.print(p1 + " ");
+					System.out.print(p2 + " ");
+					System.out.println(inter); */
 					return true;
-			/* allow movement along a polygon  */
+				}
+			}
+			/* allow movement along a polygon */
 			if((p1.equal(p3) && p2.equal(p4)) || (p2.equal(p3) && p1.equal(p4))) {
 				return false;
 			}
@@ -85,12 +104,12 @@ public class Polygon
 		for(int i = 0; i < numVertices; i++) {
 			p3 = this.vertices.get(i % numVertices).clone();
 			p4 = this.vertices.get((i+1) % numVertices).clone();
-			inter = intersectLines(p,p2, p3,p4);
+			inter = intersectRay(p,p2, p3,p4);
 			if(inter != null && dir.dot(inter.sub(p)) > 0) {
 				countInter += 1;
 			}
 		}
-		return countInter % 2 != 0;
+		return countInter % 2 == 1;
 	}
 	
 	public Polygon grow(double amount)
