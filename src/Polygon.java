@@ -123,6 +123,10 @@ public class Polygon
 		assert vertices.size() == numVertices;
 		Polygon p = new Polygon(numVertices);
 		p.vertices = (ArrayList<Point>)vertices.clone();
+		for(int i = 0; i < p.vertices.size(); i++)
+		{
+			p.vertices.set(i, p.vertices.get(i).clone());
+		}
 		return p;
 	}
 	
