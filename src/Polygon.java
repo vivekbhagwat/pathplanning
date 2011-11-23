@@ -142,6 +142,61 @@ public class Polygon
 		return pts;
 	}
 	
+	public Polygon makeConvex()
+	{
+		System.out.println(vertices);
+		Polygon p = clone();
+		ArrayList<Point> pts = new ArrayList<Point>();
+		pts.add(new Point(0.,0.));
+		pts.addAll(vertices);
+		int min_y_index = 1;
+		for(int i = 1; i < pts.size(); i++)
+		{
+			if (pts.get(min_y_index).y > pts.get(i).y)
+				min_y_index = i;
+		}
+		swap(pts, 1, min_y_index);
+		
+		pts.set(0, pts.get(pts.size() - 1));
+		
+		int m = 2;
+		for(int i = 3; i < pts.size(); i++)
+		{
+			System.out.println("m: " + m + " i: " + i);
+			while(i < pts.size()-1 && Point.ccw(pts.get(m-1), pts.get(m), pts.get(i)) <= 0 )
+			{
+				if(m == 2)
+				{
+					swap(pts, m, i);
+					i += 1;
+				}
+				else
+				{
+					m -= 1;
+				}
+			}
+			m++;
+			swap(pts, m, i);
+		}
+		p.vertices = new ArrayList<Point>(numVertices);
+		System.out.println(m);
+		System.out.println("pts:" + pts);
+		for(int i = 1; i <= m; i++)
+		{
+			p.vertices.add(pts.get(i));
+		}
+		p.numVertices = p.vertices.size();
+		return p;
+	}
+	
+	//mutator
+	private void swap(ArrayList<Point> pts, int i, int j)
+	{
+		Point temp = pts.get(i);
+		pts.set(i, pts.get(j));
+		pts.set(j, temp);
+	}
+	
 	public String toString()
 	{
 		String s = "[Polygon ";
