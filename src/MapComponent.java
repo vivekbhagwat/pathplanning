@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class MapComponent extends JComponent
+public class MapComponent extends JComponent//JScrollPane
 {
 	private static final long serialVersionUID = 1L;
 	public int mapHeight, mapWidth;
@@ -61,18 +61,31 @@ public class MapComponent extends JComponent
 		mapWidth = getWidth();
 		
 		ArrayList<Polygon> obstacles = robotMap.obstacles;
+		ArrayList<Polygon> originalObstacles = robotMap.originalObstacles;
 		for(int i = 0; i < obstacles.size(); i++)
 		{
 			ArrayList<Point> points = obstacles.get(i).vertices;
+			ArrayList<Point> originalPoints = originalObstacles.get(i).vertices;
+			System.out.println("\n" + originalPoints);
+			System.out.println(points + "\n");
 			for(int j = 0; j < points.size(); j++)
 			{
 				drawVertex(g2, points.get(j));
+				g2.setColor(Color.RED);
+				drawVertex(g2, originalPoints.get(j));
+				g2.setColor(Color.BLACK);				
 				if (j < points.size()-1)
 				{
 					drawEdge(points.get(j), points.get(j+1));
+					g2.setColor(Color.RED);
+					drawEdge(originalPoints.get(j), originalPoints.get(j+1));
+					g2.setColor(Color.BLACK);					
 				}
 			}
 			drawEdge(points.get(0), points.get(points.size()-1));
+			g2.setColor(Color.RED);
+			drawEdge(originalPoints.get(0), originalPoints.get(originalPoints.size()-1));
+			g2.setColor(Color.BLACK);			
 		}
 		
 		drawPoint(g2, robotMap.start, 10, "Start");
@@ -178,6 +191,7 @@ public class MapComponent extends JComponent
 	{
 		double w = getWidth();
 		double h = getHeight();
+		// System.out.println("Width = " + w + "\tHeight = " + h);
 		boolean wideWidth = (w/h) > (maxx-minx)/(maxy-miny);
 		double dim = wideWidth ? h : w;
 		return new Point((val.x-minx)/(maxx-minx)*dim, (val.y-miny)/(maxy-miny)*dim);
