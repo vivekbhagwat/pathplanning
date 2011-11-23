@@ -72,6 +72,7 @@ public class Point implements Comparable<Point>
 		return new Point(x,y);
 	}
 	
+	//because path is not cloned, this is only useful if dijkstra not yet called.
 	public Point clone()
 	{
 		return new Point(this.x, this.y);
