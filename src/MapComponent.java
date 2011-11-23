@@ -78,7 +78,7 @@ public class MapComponent extends JComponent
 		drawPoint(g2, robotMap.start, 10, "Start");
 		drawPoint(g2, robotMap.goal, 10, "Goal");
 		
-		drawPossiblePaths();
+		//drawPossiblePaths();
 				
 		
 		ArrayList<Point> bound = robotMap.boundary;
@@ -178,7 +178,7 @@ public class MapComponent extends JComponent
 	{
 		double w = getWidth();
 		double h = getHeight();
-		boolean wideWidth = (w/h) > (maxx-minx)/(maxy-miny);
+		boolean wideWidth = (w/h) > 1;
 		double dim = wideWidth ? h : w;
 		return new Point((val.x-minx)/(maxx-minx)*dim, (val.y-miny)/(maxy-miny)*dim);
 	}

@@ -51,9 +51,10 @@ public class PathPlanner {
 						adj.path = current;
 						// comp.drawPossiblePaths(adj, )
 					}
-					// pq.add(adj);
+					pq.add(adj);
 				}
 			}
+			System.out.println(current);
 		}
 		Point end = map.goal;
 		// double pathLength = end.dist;
