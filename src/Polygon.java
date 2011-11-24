@@ -103,7 +103,6 @@ public class Polygon
 		}
 		center = center.mult(1/(double)numVertices);
 		Point dir = p.sub(center);
-		System.out.println(dir);
 		Point p2 = p.translate(dir);
 		Point p3, p4, inter;
 		int countInter = 0;

@@ -67,7 +67,6 @@ public class Map
 				Point begin = nodes.get(i);
 				Point end   = nodes.get(j);
 				adjacencyMatrix[i][j] = begin.distFrom(end);
-				boolean trip = false;
 				for(int k = 0; k < obstacles.size(); k++) {
 					Polygon poly = obstacles.get(k);
 					/* check for interior overlapping polygon crossings */ // !!!
@@ -84,7 +83,6 @@ public class Map
 					   !(Math.abs(ind1-ind2) == 1 || Math.abs(ind1-ind2) == poly.vertices.size()-1))
 					{
 						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
-						trip = true;
 						break;
 					}
 					/* do more mundane intersection checking */
