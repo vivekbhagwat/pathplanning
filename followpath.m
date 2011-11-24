@@ -36,21 +36,25 @@ while(index <= length(px))
     end
     
     % move towards the next goal
+    downsteps = -10000;
     SetFwdVelRadiusRoomba(serPort, speed, inf);
     while(dist([x,y],[px(index),py(index)]) > dist_thresh)
         d = DistanceSensorRoomba(serPort);
         x = x + d*cos(angle);
         y = y + d*sin(angle);
         logdown = log2(dist([x,y],[px(index),py(index)])/dist_thresh);
-        downsteps = 2 - logdown;
-        disp(downsteps);
-        disp([x,y]);
-        disp([px(index),py(index)]);
+        % downsteps monotonically increases (exponent of fraction)
+        if(2-logdown >= downsteps)
+            downsteps = 2 - logdown;
+        end
+        % disp(downsteps);
+        % disp([x,y]);
+        % disp([px(index),py(index)]);
         if(downsteps > 0)
-            SetFwdVelRadiusRoomba(serPort, speed*0.5^downsteps, inf);
+            SetFwdVelRadiusRoomba(serPort, speed*0.7^downsteps, inf);
         end
         if isSimulator(serPort)
-            pause(0.05);
+            pause(0.005);
         end
     end
     SetFwdVelRadiusRoomba(serPort, 0, inf);
