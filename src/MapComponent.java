@@ -68,8 +68,8 @@ public class MapComponent extends JComponent//JScrollPane
 		{
 			ArrayList<Point> points = obstacles.get(i).vertices;
 			ArrayList<Point> originalPoints = originalObstacles.get(i).vertices;
-			System.out.println("\n" + originalPoints);
-			System.out.println(points + "\n");
+			/* System.out.println("\n" + originalPoints);
+			System.out.println(points + "\n"); */
 			for(int j = 0; j < points.size(); j++)
 			{
 				drawVertex(g2, points.get(j));
@@ -90,6 +90,7 @@ public class MapComponent extends JComponent//JScrollPane
 			g2.setColor(Color.BLACK);			
 		}
 		
+
 		drawPoint(g2, robotMap.start, 10, "Start");
 		drawPoint(g2, robotMap.goal, 10, "Goal");
 		

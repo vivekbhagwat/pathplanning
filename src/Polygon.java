@@ -61,7 +61,7 @@ public class Polygon
 			return null;
 		d2 = p3.distFrom(p4);
 		// check the line intersections themselves
-		if((d2 < p.distFrom(p3) || d2 < p.distFrom(p4)) || (p2.sub(p1).dot(p) < 0))
+		if((d2 < p.distFrom(p3) || d2 < p.distFrom(p4)) || (p1.sub(p2).dot(p1.sub(p)) < 0))
 			return null;
 		return p;
 	}
@@ -97,7 +97,13 @@ public class Polygon
 	{
 		assert vertices.size() == numVertices;
 		/* for each edge, check if there's an intersection */
-		Point dir = new Point(1.0, 1.0);
+		Point center = new Point(0.0, 0.0);
+		for(int i = 0; i < numVertices; i++) {
+			center = center.translate(vertices.get(i));
+		}
+		center = center.mult(1/(double)numVertices);
+		Point dir = p.sub(center);
+		System.out.println(dir);
 		Point p2 = p.translate(dir);
 		Point p3, p4, inter;
 		int countInter = 0;
@@ -105,7 +111,9 @@ public class Polygon
 			p3 = this.vertices.get(i % numVertices).clone();
 			p4 = this.vertices.get((i+1) % numVertices).clone();
 			inter = intersectRay(p,p2, p3,p4);
-			if(inter != null && dir.dot(inter.sub(p)) > 0) {
+			if(inter != null) {
+				if(inter.equal(p))
+					continue;
 				countInter += 1;
 			}
 		}

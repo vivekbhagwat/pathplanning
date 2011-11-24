@@ -62,32 +62,30 @@ public class Map
 	{
 		for(int i = 0; i < adjacencyMatrix.length; i++)
 		{
-			for(int j = 0; j < adjacencyMatrix[i].length; j++)
+			for(int j = 0; j < adjacencyMatrix.length; j++)
 			{
 				Point begin = nodes.get(i);
 				Point end   = nodes.get(j);
 				adjacencyMatrix[i][j] = begin.distFrom(end);
+				boolean trip = false;
 				for(int k = 0; k < obstacles.size(); k++) {
-					Polygon poly = obstacles.get(k); 
+					Polygon poly = obstacles.get(k);
 					/* check for interior overlapping polygon crossings */ // !!!
-					/* if(k > 0 && (poly.interior(begin) || poly.interior(end)))
+					Point mid = begin.translate(end).mult(0.5);
+					if(k > 0 && poly.interior(mid))
 					{
 						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
 						break;
-					} */
+					}
 					/* check for interior crossing of polygons */
 					int ind1 = poly.vertices.indexOf(begin);
 					int ind2 = poly.vertices.indexOf(end);
 					if(ind1 > -1 && ind2 > -1 &&
-					   (Math.abs(ind1-ind2) != 1 && Math.abs(ind1-ind2) != poly.vertices.size()-1))
+					   !(Math.abs(ind1-ind2) == 1 || Math.abs(ind1-ind2) == poly.vertices.size()-1))
 					{
 						adjacencyMatrix[i][j] = Double.POSITIVE_INFINITY;
+						trip = true;
 						break;
-					} else if(ind1 > -1 && ind2 > -1) {
-						System.out.print(ind1 + " ");
-						System.out.print(ind2 + " ");
-						System.out.print(poly.vertices.size() + " ");
-						System.out.println(poly.numVertices);
 					}
 					/* do more mundane intersection checking */
 					if(poly.intersect(begin, end))
@@ -98,6 +96,14 @@ public class Map
 				}
 			}
 		}
+		/* for(int i = 0; i < adjacencyMatrix.length; i++)
+		{
+			for(int j = 0; j < adjacencyMatrix.length; j++)
+			{
+				System.out.print(String.format("%.8g", adjacencyMatrix[i][j]) + ",\t");
+			}
+			System.out.println();
+		} */
 	}
 	
 	//fills in map with points from inputFile

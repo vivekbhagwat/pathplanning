@@ -56,8 +56,8 @@ public class PathPlanner {
 					pq.add(adj);
 				}
 			}
-			System.out.print(current.path + " ");
-			System.out.println(current);
+			/* System.out.print(current.path + " ");
+			System.out.println(current); */
 		}
 		Point end = map.goal;
 		// double pathLength = end.dist;
